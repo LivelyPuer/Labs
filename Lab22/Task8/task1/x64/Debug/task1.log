@@ -1,0 +1,4 @@
+﻿  task1.cpp
+E:\VSProjects\Lab21\task1\task1.cpp(91,73): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+E:\VSProjects\Lab21\task1\task1.cpp(34): warning C4715: PlayerCoord: значение возвращается не при всех путях выполнения
+  task1.vcxproj -> E:\VSProjects\Lab21\x64\Debug\task1.exe

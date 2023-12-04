@@ -1,0 +1,341 @@
+﻿// Task3.cpp : Defines the entry point for the application.
+//
+
+#include "framework.h"
+#include "Task3.h"
+
+#define MAX_LOADSTRING 100
+
+// Global Variables:
+HINSTANCE hInst;                                // current instance
+WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
+WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
+
+// Forward declarations of functions included in this code module:
+ATOM                MyRegisterClass(HINSTANCE hInstance);
+BOOL                InitInstance(HINSTANCE, int);
+LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
+                     _In_opt_ HINSTANCE hPrevInstance,
+                     _In_ LPWSTR    lpCmdLine,
+                     _In_ int       nCmdShow)
+{
+    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(lpCmdLine);
+
+    // TODO: Place code here.
+
+    // Initialize global strings
+    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_TASK3, szWindowClass, MAX_LOADSTRING);
+    MyRegisterClass(hInstance);
+
+    // Perform application initialization:
+    if (!InitInstance (hInstance, nCmdShow))
+    {
+        return FALSE;
+    }
+
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TASK3));
+
+    MSG msg;
+
+    // Main message loop:
+    while (GetMessage(&msg, nullptr, 0, 0))
+    {
+        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+    }
+
+    return (int) msg.wParam;
+}
+
+
+
+//
+//  FUNCTION: MyRegisterClass()
+//
+//  PURPOSE: Registers the window class.
+//
+ATOM MyRegisterClass(HINSTANCE hInstance)
+{
+    WNDCLASSEXW wcex;
+
+    wcex.cbSize = sizeof(WNDCLASSEX);
+
+    wcex.style          = CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc    = WndProc;
+    wcex.cbClsExtra     = 0;
+    wcex.cbWndExtra     = 0;
+    wcex.hInstance      = hInstance;
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_TASK3));
+    wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
+    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_TASK3);
+    wcex.lpszClassName  = szWindowClass;
+    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+
+    return RegisterClassExW(&wcex);
+}
+
+//
+//   FUNCTION: InitInstance(HINSTANCE, int)
+//
+//   PURPOSE: Saves instance handle and creates main window
+//
+//   COMMENTS:
+//
+//        In this function, we save the instance handle in a global variable and
+//        create and display the main program window.
+//
+BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
+{
+   hInst = hInstance; // Store instance handle in our global variable
+
+   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+
+   if (!hWnd)
+   {
+      return FALSE;
+   }
+
+   ShowWindow(hWnd, nCmdShow);
+   UpdateWindow(hWnd);
+
+   return TRUE;
+}
+
+void drawHome(HDC hdc) {
+    HPEN hPen;
+
+    // -------ДОМ-------
+            // крыша
+    hPen = CreatePen(PS_DASH, 5, RGB(255, 128, 0));
+    SelectObject(hdc, hPen);
+
+    MoveToEx(hdc, 150, 350, NULL);
+    LineTo(hdc, 275, 250);
+    LineTo(hdc, 400, 350);
+
+    // дом
+    hPen = CreatePen(PS_DASH, 8, RGB(0, 0, 0));
+    SelectObject(hdc, hPen);
+
+    LineTo(hdc, 400, 525);
+    LineTo(hdc, 150, 525);
+    LineTo(hdc, 150, 350);
+    LineTo(hdc, 400, 350);
+
+    // окно
+    hPen = CreatePen(PS_DASH, 2, RGB(0, 128, 255));
+    SelectObject(hdc, hPen);
+
+    MoveToEx(hdc, 225, 400, NULL);
+    LineTo(hdc, 225, 475);
+    LineTo(hdc, 325, 475);
+    LineTo(hdc, 325, 400);
+    LineTo(hdc, 225, 400);
+
+    // рама
+    MoveToEx(hdc, 275, 400, NULL);
+    LineTo(hdc, 275, 475);
+    MoveToEx(hdc, 275, 425, NULL);
+    LineTo(hdc, 325, 425);
+    // -------ДОМ-------
+}
+void drawCar(HDC hdc) {
+    HBRUSH hBrush;
+
+    HPEN hPen;
+    hPen = CreatePen(PS_SOLID, 5, RGB(128, 0, 0));
+    SelectObject(hdc, hPen);
+    hBrush = CreateSolidBrush(RGB(255, 128, 0));
+    SelectObject(hdc, hBrush);
+
+    Rectangle(hdc, 50, 200, 300, 250);
+
+    hPen = CreatePen(PS_SOLID, 5, RGB(0, 128, 255));
+    SelectObject(hdc, hPen);
+    hBrush = CreateHatchBrush(HS_FDIAGONAL, RGB(255, 0, 0));
+    SelectObject(hdc, hBrush);
+
+    Ellipse(hdc, 75, 275, 125, 225);
+    DeleteObject(hBrush);
+    hPen = CreatePen(PS_SOLID, 5, RGB(0, 255, 128));
+    SelectObject(hdc, hPen);
+    hBrush = CreateHatchBrush(HS_BDIAGONAL, RGB(0, 255, 0));
+    SelectObject(hdc, hBrush);
+
+    Ellipse(hdc, 225, 275, 275, 225);
+    DeleteObject(hBrush);
+
+    hPen = CreatePen(PS_SOLID, 5, RGB(128, 0, 0));
+    SelectObject(hdc, hPen);
+
+    MoveToEx(hdc, 100, 200, NULL);
+    LineTo(hdc, 150, 150);
+    LineTo(hdc, 250, 150);
+    LineTo(hdc, 300, 200);
+}
+
+void drawBush(HDC hdc) {
+    HPEN hPen;
+    hPen = CreatePen(PS_DOT, 2, RGB(0, 255, 30));
+    SelectObject(hdc, hPen);
+
+    int x1 = 0, y1 = 250;
+    int x2 = 100, y2 = 250;
+    do {
+        MoveToEx(hdc, x1, y1, NULL);
+        LineTo(hdc, x2, y2);
+
+        x1 += 5;
+        y1 -= 10;
+    } while (x1 <= 100);
+
+    x1 = 100;
+    y1 = 50;
+
+    do {
+        MoveToEx(hdc, x1, y1, NULL);
+        LineTo(hdc, x2, y2);
+
+        x1 += 5;
+        y1 += 10;
+    } while (x1 <= 200);
+}
+void drawBush2(HDC hdc) {
+    HPEN hPen;
+    hPen = CreatePen(PS_DOT, 2, RGB(0, 255, 30));
+    SelectObject(hdc, hPen);
+
+    hPen = CreatePen(PS_DOT, 2, RGB(0, 255, 30));
+    SelectObject(hdc, hPen);
+
+    int x = 10;
+    do {
+        MoveToEx(hdc, 400, 120, NULL);
+        LineTo(hdc, 300 + x * 20, 20);
+        x--;
+    } while (x > 0);
+}
+void drawFence(HDC hdc) {
+    HPEN hPen;
+
+    hPen = CreatePen(PS_DOT, 2, RGB(128, 64, 48));
+    SelectObject(hdc, hPen);
+
+    int x1 = 700;
+    int y1 = 0;
+
+    do {
+        MoveToEx(hdc, x1, y1, NULL);
+        LineTo(hdc, x1, 100);
+
+        x1 += 10;
+    } while (x1 <= 1200);
+}
+void drawStairs(HDC hdc) {
+    HPEN hPen;
+
+    hPen = CreatePen(PS_DOT, 2, RGB(128, 64, 48));
+    SelectObject(hdc, hPen);
+    int x1 = 1200;
+    int y1 = 700;
+
+    MoveToEx(hdc, x1, y1, NULL);
+
+    do {
+        y1 -= 20;
+        LineTo(hdc, x1, y1);
+
+        x1 += 20;
+        LineTo(hdc, x1, y1);
+    } while (x1 <= 1600);
+}
+void drawSecondStairs(HDC hdc) {
+    HPEN hPen;
+
+    hPen = CreatePen(PS_DOT, 2, RGB(0, 255, 0));
+    SelectObject(hdc, hPen);
+
+    int x1 = 700;
+    int y1 = 120;
+
+    do {
+        MoveToEx(hdc, x1, y1, NULL);
+        LineTo(hdc, x1, y1 + 50);
+
+        x1 += 5;
+    } while (x1 <= 1200);
+
+}
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    switch (message)
+    {
+    case WM_COMMAND:
+        {
+            int wmId = LOWORD(wParam);
+            // Parse the menu selections:
+            switch (wmId)
+            {
+            case IDM_ABOUT:
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+                break;
+            case IDM_EXIT:
+                DestroyWindow(hWnd);
+                break;
+            default:
+                return DefWindowProc(hWnd, message, wParam, lParam);
+            }
+        }
+        break;
+    case WM_PAINT:
+        {
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hWnd, &ps);
+            drawHome(hdc);
+            drawCar(hdc);
+            drawBush(hdc);
+            drawBush2(hdc);
+            drawFence(hdc);
+            drawStairs(hdc);
+            drawSecondStairs(hdc);
+            EndPaint(hWnd, &ps);
+        }
+        break;
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+    default:
+        return DefWindowProc(hWnd, message, wParam, lParam);
+    }
+    return 0;
+}
+
+// Message handler for about box.
+INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+        return (INT_PTR)TRUE;
+
+    case WM_COMMAND:
+        if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+        {
+            EndDialog(hDlg, LOWORD(wParam));
+            return (INT_PTR)TRUE;
+        }
+        break;
+    }
+    return (INT_PTR)FALSE;
+}

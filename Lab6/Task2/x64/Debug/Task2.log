@@ -1,0 +1,4 @@
+﻿  Source.cpp
+C:\Users\User\Documents\Trash\Оаип\Lab6\Task2\Source.cpp(13,17): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Documents\Trash\Оаип\Lab6\Task2\Source.cpp(13,13): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Task2.vcxproj -> C:\Users\User\Documents\Trash\Оаип\Lab6\x64\Debug\Task2.exe
