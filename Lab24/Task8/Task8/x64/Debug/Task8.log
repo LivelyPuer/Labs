@@ -1,0 +1,6 @@
+﻿  Task8.cpp
+E:\VSProjects\Lab24\Task8\Task8.cpp(91,73): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+E:\VSProjects\Lab24\Task8\Task8.cpp(204,12): warning C4101: j: неиспользованная локальная переменная
+E:\VSProjects\Lab24\Task8\Task8.cpp(204,9): warning C4101: i: неиспользованная локальная переменная
+E:\VSProjects\Lab24\Task8\Task8.cpp(34): warning C4715: PlayerCoord: значение возвращается не при всех путях выполнения
+  Task8.vcxproj -> E:\VSProjects\Lab24\x64\Debug\Task8.exe
