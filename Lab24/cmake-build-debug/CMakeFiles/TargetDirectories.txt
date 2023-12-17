@@ -1,0 +1,3 @@
+/home/maxim/CLionProjects/Labs/Lab24/cmake-build-debug/CMakeFiles/Lab24.dir
+/home/maxim/CLionProjects/Labs/Lab24/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/maxim/CLionProjects/Labs/Lab24/cmake-build-debug/CMakeFiles/rebuild_cache.dir
